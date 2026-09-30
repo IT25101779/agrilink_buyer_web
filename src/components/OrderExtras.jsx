@@ -50,7 +50,7 @@ export default function OrderExtras({ order }) {
     const reason = REASONS[Number(pick) - 1]?.[0]; if (!reason) return;
     const description = window.prompt("Tell us what happened (optional):") || "";
     const r = await api.call(token, "POST", `/orders/${order.id}/dispute`, { reason, description });
-    setMsg(r.success ? "Problem sent. The farmer and the AgriLink team can see it." : r.message);
+    setMsg(r.success ? "Problem sent. The farmer and the ගොවි Tech team can see it." : r.message);
     loadCases();
   };
 

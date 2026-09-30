@@ -40,7 +40,7 @@ export default function LoginPage() {
           <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-4">
             <Sprout size={26} className="text-white" />
           </div>
-          <h1 className="font-display text-4xl font-semibold text-white">AgriLink AI</h1>
+          <h1 className="font-display text-4xl font-semibold text-white">ගොවි Tech</h1>
           <p className="text-forest-100/70 mt-2 font-body">Corporate Buyer Portal</p>
         </motion.div>
 

@@ -50,7 +50,7 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-forest-900 to-forest-600 px-4 py-10">
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="font-display text-4xl font-semibold text-white">AgriLink AI</h1>
+          <h1 className="font-display text-4xl font-semibold text-white">ගොවි Tech</h1>
           <p className="text-forest-100/70 mt-2 font-body">Create your buyer account</p>
         </div>
 
