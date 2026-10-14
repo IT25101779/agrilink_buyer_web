@@ -9,6 +9,8 @@ import InvestSection from "../components/InvestSection.jsx";
 import BulkLotsSection from "../components/BulkLotsSection.jsx";
 import DemandBoardSection from "../components/DemandBoardSection.jsx";
 import TradeOrdersSection from "../components/TradeOrdersSection.jsx";
+import SecondChanceSection from "../components/SecondChanceSection.jsx";
+import ForwardContractsSection from "../components/ForwardContractsSection.jsx";
 import { SkeletonGrid } from "../components/Skeleton.jsx";
 import { staggerContainer, pageTransition } from "../motion/variants.js";
 import { api } from "../services/api.js";
@@ -35,7 +37,15 @@ export default function DashboardPage() {
 
   const loadListings = useCallback(async () => {
     // These tabs load their own data inside their own components.
-    if (activeTab === "invest" || activeTab === "lots" || activeTab === "demand" || activeTab === "orders") return;
+    if (
+      activeTab === "invest" ||
+      activeTab === "lots" ||
+      activeTab === "demand" ||
+      activeTab === "orders" ||
+      activeTab === "second-chance" ||
+      activeTab === "contracts"
+    )
+      return;
     setIsLoading(true);
     let result;
     if (activeTab === "browse") {
@@ -91,7 +101,7 @@ export default function DashboardPage() {
     setActionsDisabled(false);
     setRejectTarget(null);
     if (result.success) {
-      showToast(`Listing rejected and moved to the secondary market at a markdown.`);
+      showToast(`Rejection recorded — the farmer's been notified. You'll find this listing under "Second Chance (mine)" if it's still available.`);
       loadListings();
     } else {
       showToast(result.message || "Could not process rejection.", "error");
@@ -124,6 +134,10 @@ export default function DashboardPage() {
               <TradeOrdersSection showToast={showToast} />
             ) : activeTab === "demand" ? (
               <DemandBoardSection showToast={showToast} />
+            ) : activeTab === "second-chance" ? (
+              <SecondChanceSection showToast={showToast} />
+            ) : activeTab === "contracts" ? (
+              <ForwardContractsSection showToast={showToast} />
             ) : (
               <>
                 <div className="flex items-center justify-between mb-6">

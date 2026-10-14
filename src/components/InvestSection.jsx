@@ -39,10 +39,25 @@ export default function InvestSection({ buyerId, showToast }) {
     setIsSubmitting(false);
     setPledgeTarget(null);
     if (result.success) {
-      showToast(`Pledged LKR ${amount.toLocaleString()} to ${pledgeTarget.cropType} campaign.`);
+      const phone = result.farmerPhone;
+      showToast(
+        phone
+          ? `Interest recorded. Call ${result.farmerName || "the farmer"} on ${phone} to discuss, then confirm from "My Investments".`
+          : `Interest recorded for ${pledgeTarget.cropType} campaign. Confirm from "My Investments" after you've discussed it.`
+      );
       loadBrowse();
     } else {
       showToast(result.message || "Pledge failed.", "error");
+    }
+  }
+
+  async function handleConfirmPledge(inv) {
+    const result = await api.confirmPledge(inv.campaignId, inv.pledgeId);
+    if (result.success) {
+      showToast(`Pledge confirmed — LKR ${inv.amountLkr.toLocaleString()} now counts toward the campaign.`);
+      loadMine();
+    } else {
+      showToast(result.message || "Could not confirm pledge.", "error");
     }
   }
 
@@ -147,6 +162,7 @@ export default function InvestSection({ buyerId, showToast }) {
                 <th className="px-5 py-3 font-medium">Expected Return</th>
                 <th className="px-5 py-3 font-medium">Campaign Status</th>
                 <th className="px-5 py-3 font-medium">Pledge Status</th>
+                <th className="px-5 py-3 font-medium">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -158,6 +174,28 @@ export default function InvestSection({ buyerId, showToast }) {
                   <td className="px-5 py-3 font-mono text-forest-600">LKR {inv.expectedReturnLkr.toLocaleString()}</td>
                   <td className="px-5 py-3 capitalize">{inv.campaignStatus}</td>
                   <td className="px-5 py-3 capitalize">{inv.pledgeStatus}</td>
+                  <td className="px-5 py-3">
+                    {inv.pledgeStatus === "interested" ? (
+                      <div className="flex items-center gap-2">
+                        {inv.farmerPhone && (
+                          <a
+                            href={`tel:${inv.farmerPhone}`}
+                            className="text-xs font-medium text-forest-600 border border-forest-100 rounded-lg px-2.5 py-1.5 hover:bg-forest-50 transition-colors whitespace-nowrap"
+                          >
+                            Call {inv.farmerPhone}
+                          </a>
+                        )}
+                        <button
+                          onClick={() => handleConfirmPledge(inv)}
+                          className="text-xs font-medium text-white bg-forest-600 hover:bg-forest-700 rounded-lg px-2.5 py-1.5 transition-colors whitespace-nowrap"
+                        >
+                          Confirm
+                        </button>
+                      </div>
+                    ) : (
+                      <span className="text-xs text-ink-400">—</span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

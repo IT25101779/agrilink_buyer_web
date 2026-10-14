@@ -37,8 +37,10 @@ export default function RejectModal({ listing, onClose, onConfirm, isSubmitting 
             </div>
             <h3 className="font-display text-xl font-semibold text-ink-900 mb-1 mt-2">Reject listing</h3>
             <p className="text-sm text-ink-400 mb-5">
-              {listing?.cropType} — {listing?.quantityKg}kg. Rejecting will automatically move this listing to the
-              secondary flash-sale market with a price markdown, instead of discarding it.
+              {listing?.cropType} — {listing?.quantityKg}kg. The farmer will be notified of your reason, and you'll
+              see this listing again under "Second Chance (mine)". The price does <strong>not</strong> change
+              automatically — only the farmer can decide to lower it, and that's the only thing that moves the
+              price for anyone.
             </p>
 
             <div className="mb-4">
@@ -81,7 +83,7 @@ export default function RejectModal({ listing, onClose, onConfirm, isSubmitting 
                 disabled={isSubmitting || !reason.trim()}
                 className="flex-1 bg-clay-500 hover:bg-clay-600 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-50"
               >
-                {isSubmitting ? "Processing…" : "Reject & Redirect"}
+                {isSubmitting ? "Processing…" : "Reject (notify farmer)"}
               </motion.button>
             </div>
           </motion.div>

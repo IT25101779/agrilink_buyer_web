@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
-import { Sprout, Tag, Package, HandCoins, Users, Megaphone, LogOut } from "lucide-react";
+import { Sprout, Tag, Package, HandCoins, Users, Megaphone, LogOut, RotateCcw, Handshake } from "lucide-react";
 import { auth } from "../services/auth.js";
 
 const TABS = [
   { id: "browse", label: "Browse Marketplace", icon: Sprout },
   { id: "secondary", label: "Secondary Market", icon: Tag },
+  { id: "second-chance", label: "Second Chance (mine)", icon: RotateCcw },
   { id: "orders", label: "My Orders", icon: Package },
   { id: "lots", label: "Group Lots", icon: Users },
   { id: "demand", label: "Demand Board", icon: Megaphone },
+  { id: "contracts", label: "Forward Contracts", icon: Handshake },
   { id: "invest", label: "Invest in Crops", icon: HandCoins },
 ];
 
@@ -21,7 +23,7 @@ export default function Sidebar({ activeTab, onTabChange, onLogout }) {
           <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
             <Sprout size={18} className="text-white" />
           </div>
-          <h1 className="font-display text-xl font-semibold">ගොවි Tech</h1>
+          <h1 className="font-display text-xl font-semibold">AgriLink AI</h1>
         </div>
         <p className="text-xs text-forest-100/50 mt-2 tracking-wide uppercase pl-0.5">Buyer Portal</p>
       </div>

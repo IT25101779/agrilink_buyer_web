@@ -33,7 +33,9 @@ export default function PledgeModal({ campaign, onClose, onConfirm, isSubmitting
               Sponsor {campaign?.farmer?.fullName}'s {campaign?.cropType} crop
             </h3>
             <p className="text-sm text-ink-400 mb-5">
-              LKR {remaining.toLocaleString()} still needed · {campaign?.returnPercentage}% return on repayment
+              LKR {remaining.toLocaleString()} still needed · {campaign?.returnPercentage}% return on repayment.
+              This just records your interest — you'll get the farmer's phone number to discuss first, then confirm
+              afterwards to make it count.
             </p>
 
             <div className="mb-4">
@@ -75,7 +77,7 @@ export default function PledgeModal({ campaign, onClose, onConfirm, isSubmitting
                 disabled={isSubmitting || parsedAmount <= 0}
                 className="flex-1 bg-forest-600 hover:bg-forest-700 text-white font-medium py-2.5 rounded-lg transition-colors disabled:opacity-50"
               >
-                {isSubmitting ? "Processing…" : "Confirm Pledge"}
+                {isSubmitting ? "Processing…" : "Express Interest"}
               </motion.button>
             </div>
           </motion.div>

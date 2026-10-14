@@ -154,6 +154,52 @@ export const api = {
     return handleResponse(response);
   },
 
+  // Step 2 of the phone-first pledge flow: AFTER calling the farmer, either
+  // side confirms through the app — only this actually counts toward the
+  // campaign's funding goal and earns the investor "benefits".
+  async confirmPledge(campaignId, pledgeId) {
+    const response = await fetch(`${BASE_URL}/crowdfunding/campaigns/${campaignId}/pledges/${pledgeId}/confirm`, {
+      method: "PATCH",
+      headers: authHeaders(true),
+    });
+    return handleResponse(response);
+  },
+
+  // Anti-abuse redesign: a buyer's own rejected listings, shown ONLY to the
+  // buyer who rejected them — never a global discount for everyone.
+  async getMySecondChance() {
+    const response = await fetch(`${BASE_URL}/marketplace/listings/secondary-for-me`, { headers: authHeaders() });
+    return handleResponse(response);
+  },
+
+  // ---------- Forward / contract listings (lock in a price before harvest) ----------
+  async createForwardContract({ cropType, totalQuantityKg, lockedPricePerKg, deliverByDate, district, note }) {
+    const response = await fetch(`${BASE_URL}/forward-contracts`, {
+      method: "POST",
+      headers: authHeaders(true),
+      body: JSON.stringify({ cropType, totalQuantityKg, lockedPricePerKg, deliverByDate, district, note }),
+    });
+    return handleResponse(response);
+  },
+
+  async getMyForwardContracts() {
+    const response = await fetch(`${BASE_URL}/forward-contracts/mine`, { headers: authHeaders() });
+    return handleResponse(response);
+  },
+
+  async cancelForwardContract(contractId) {
+    const response = await fetch(`${BASE_URL}/forward-contracts/${contractId}/cancel`, { method: "PATCH", headers: authHeaders() });
+    return handleResponse(response);
+  },
+
+  async confirmForwardCommitment(contractId, commitmentId) {
+    const response = await fetch(`${BASE_URL}/forward-contracts/${contractId}/commitments/${commitmentId}/confirm`, {
+      method: "PATCH",
+      headers: authHeaders(),
+    });
+    return handleResponse(response);
+  },
+
   // ---------- Group lots (bulk buying from pooled farmers) ----------
   async getGroupLots({ status, claimedByMe } = {}) {
     const params = new URLSearchParams();
